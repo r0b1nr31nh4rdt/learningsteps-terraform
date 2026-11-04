@@ -12,6 +12,11 @@ resource "azurerm_log_analytics_workspace" "main" {
   resource_group_name = azurerm_resource_group.main.name
   sku                 = "PerGB2018"
   retention_in_days   = 30
+
+  # Azure Policy adds a created-on tag after creation; ignore it so plan stays clean
+  lifecycle {
+    ignore_changes = [tags["created-on"]]
+  }
 }
 
 # ── Microsoft Sentinel ────────────────────────────────────────────────────────
@@ -29,6 +34,11 @@ resource "azurerm_virtual_machine_extension" "ama" {
   auto_upgrade_minor_version = true
 
   depends_on = [azurerm_virtual_machine_extension.aad_ssh]
+
+  # Azure Policy adds a created-on tag after creation; ignore it so plan stays clean
+  lifecycle {
+    ignore_changes = [tags["created-on"]]
+  }
 }
 
 # ── Data Collection Rule: syslog → Log Analytics ──────────────────────────────
@@ -57,6 +67,11 @@ resource "azurerm_monitor_data_collection_rule" "syslog" {
       log_levels     = ["Debug", "Info", "Notice", "Warning", "Error", "Critical", "Alert", "Emergency"]
       streams        = ["Microsoft-Syslog"]
     }
+  }
+
+  # Azure Policy adds a created-on tag after creation; ignore it so plan stays clean
+  lifecycle {
+    ignore_changes = [tags["created-on"]]
   }
 }
 
