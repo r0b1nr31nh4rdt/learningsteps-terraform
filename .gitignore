@@ -1,17 +1,62 @@
-.terraform/
-.terraform.lock.hcl
-terraform.tfvars
-terraform.tfstate
-terraform.tfstate.backup
-.learningsteps_key
-.learningsteps_key.pub
+# ─── MacOS ───
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+
+# ─── vscode ───
+.vscode/
+*.code-workspace
+
+# ─── Editoren ───
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── Environments ───
 __pycache__/
 *.pyc
+venv/
+.venv/
+.env
+.env.*
+
+# ─── Tools / KI ───
 .claude/
-SECURITY_ROADMAP.md
-.terraform.tfstate.lock.info
-terraform.tfstate.*.backup
-.DS_Store
-*.sql
 .playwright-mcp/
+
+# ─── Notizen ───
 docs/
+SECURITY_ROADMAP.md
+
+# ─── Datenbank-Dumps ───
+*.sql
+*.dump
+
+# ─── Secrets ───
+.learningsteps_key
+.learningsteps_key.pub
+azssh_config
+*.pem
+*.key
+*.pfx
+
+# ─── Terraform ───
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+*.tfplan
+tfplan
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc

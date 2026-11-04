@@ -13,6 +13,11 @@ resource "azurerm_postgresql_flexible_server" "main" {
   # live. Do not add public_network_access_enabled/delegated_subnet_id/
   # private_dns_zone_id here; that migration is the whole point of the
   # exercise. See handbook.md Day 4.
+
+  # Azure Policy adds a created-on tag after creation; ignore it so plan stays clean
+  lifecycle {
+    ignore_changes = [tags["created-on"]]
+  }
 }
 
 resource "azurerm_postgresql_flexible_server_firewall_rule" "allow_all" {

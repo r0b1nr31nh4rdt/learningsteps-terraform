@@ -5,6 +5,11 @@ resource "azurerm_public_ip" "vm" {
   allocation_method   = "Static"
   sku                 = "Standard"
   domain_name_label   = lower(var.prefix)
+
+  # Azure Policy adds a created-on tag after creation; ignore it so plan stays clean
+  lifecycle {
+    ignore_changes = [tags["created-on"]]
+  }
 }
 
 resource "azurerm_network_interface" "vm" {
@@ -18,13 +23,18 @@ resource "azurerm_network_interface" "vm" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.vm.id
   }
+
+  # Azure Policy adds a created-on tag after creation; ignore it so plan stays clean
+  lifecycle {
+    ignore_changes = [tags["created-on"]]
+  }
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
   name                = "vm-${var.prefix}"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
-  size                = "Standard_D2s_v3"
+  size                = "Standard_D2s_v6"
   admin_username      = var.vm_admin_username
   network_interface_ids = [
     azurerm_network_interface.vm.id
@@ -87,6 +97,11 @@ resource "azurerm_linux_virtual_machine" "vm" {
     azurerm_postgresql_flexible_server.main,
     azurerm_postgresql_flexible_server_firewall_rule.allow_all,
   ]
+
+  # Azure Policy adds a created-on tag after creation; ignore it so plan stays clean
+  lifecycle {
+    ignore_changes = [tags["created-on"]]
+  }
 }
 
 resource "azurerm_virtual_machine_extension" "aad_ssh" {
@@ -96,4 +111,9 @@ resource "azurerm_virtual_machine_extension" "aad_ssh" {
   type                       = "AADSSHLoginForLinux"
   type_handler_version       = "1.0"
   auto_upgrade_minor_version = true
+
+  # Azure Policy adds a created-on tag after creation; ignore it so plan stays clean
+  lifecycle {
+    ignore_changes = [tags["created-on"]]
+  }
 }

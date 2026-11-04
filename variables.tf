@@ -21,6 +21,11 @@ variable "vm_admin_ssh_key" {
   type        = string
 }
 
+variable "admin_ip" {
+  description = "Öffentliche IP für SSH-Zugriff (CIDR, z.B. 1.2.3.4/32)"
+  type        = string
+}
+
 variable "db_admin_username" {
   description = "Administrator username for PostgreSQL"
   type        = string
